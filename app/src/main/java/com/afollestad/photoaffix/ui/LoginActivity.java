@@ -5,6 +5,9 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -29,11 +32,16 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.photoaffix.R;
+import com.afollestad.photoaffix.database.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -65,10 +73,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+    // Database reference
+    private DatabaseHelper myDb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        myDb = new DatabaseHelper(this);
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -191,14 +205,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
 
+            // Launch Main Activity once login complete
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+
+            // Close LoginActivity
+            LoginActivity.this.finish();
         }
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+        final Pattern VALID_EMAIL_ADDRESS_REGEX =
+                Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
+                        Pattern.CASE_INSENSITIVE);
+
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+        return matcher.find();
     }
 
     private boolean isPasswordValid(String password) {
@@ -285,7 +307,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView.setAdapter(adapter);
     }
 
-
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
@@ -301,6 +322,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * the user.
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+        // Pulls and stores all data from user credentials database
+        Cursor credentialResult = myDb.getAllData();
 
         private final String mEmail;
         private final String mPassword;
@@ -321,16 +344,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
+            return getCredentials();
         }
 
         @Override
@@ -351,6 +365,52 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
         }
+
+        public Boolean getCredentials() {
+            if (credentialResult.getCount() != 0) {
+                while (credentialResult.moveToNext()) {
+                    // Stores credential info from database
+                    final String[] CREDENTIALS = new String[]{
+                            credentialResult.getString(1), // user email from db
+                            credentialResult.getString(2) // user password from db
+                    };
+
+                    for (String credential : CREDENTIALS) {
+                        if (credential.equals(mEmail)) {
+                            // Account exists, return true if the password matches
+                            toastMakeText("Welcome Back");
+                            return CREDENTIALS[1].equals(mPassword);
+                        }
+                    }
+                }
+            }
+
+            // Register the new account
+            return addUser(mEmail, mPassword);
+        }
+
+        public boolean addUser(String userEmail, String userPassword) {
+            boolean isInserted = myDb.insertData(userEmail, userPassword);
+
+            if (isInserted)
+                toastMakeText("Registered Successfully");
+            else
+                toastMakeText("Account Not Created");
+
+            return isInserted;
+        }
+
+        public void toastMakeText(String message) {
+            // Prepare looper for UI thread message handling
+            Looper.prepare();
+
+            Toast.makeText(
+                    LoginActivity.this,
+                    message,
+                    Toast.LENGTH_LONG
+            ).show();
+
+            Looper.loop();
+        }
     }
 }
-

@@ -2,12 +2,11 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
-
     lintOptions {
         abortOnError false
     }
     defaultConfig {
-        applicationId "com.afollestad.photoaffix"
+        applicationId 'com.nem.photostitch'
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 27
@@ -23,6 +22,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    productFlavors {
+    }
 }
 
 dependencies {
@@ -37,7 +38,6 @@ dependencies {
     implementation 'com.afollestad:drag-select-recyclerview:0.3.6'
     //noinspection GradleCompatible
     implementation 'com.android.support:design:27.1.1'
-
     configurations.all {
         exclude group: 'com.android.support', module: 'support-v13'
     }

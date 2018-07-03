@@ -21,6 +21,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.Size;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
@@ -48,6 +49,7 @@ import com.afollestad.photoaffix.data.Photo;
 import com.afollestad.photoaffix.dialogs.AboutDialog;
 import com.afollestad.photoaffix.dialogs.ImageSizingDialog;
 import com.afollestad.photoaffix.dialogs.ImageSpacingDialog;
+import com.afollestad.photoaffix.dialogs.OptionsDialog;
 import com.afollestad.photoaffix.utils.Prefs;
 import com.afollestad.photoaffix.utils.Util;
 import com.afollestad.photoaffix.views.ColorCircleView;
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity
     implements ColorChooserDialog.ColorCallback,
     ImageSpacingDialog.SpacingCallback,
     ImageSizingDialog.SizingCallback,
+        OptionsDialog.OptionsDialogCallback,
     DragSelectRecyclerViewAdapter.SelectionListener {
 
   private static final int PERMISSION_RC = 69;
@@ -84,6 +87,10 @@ public class MainActivity extends AppCompatActivity
 
   @BindView(R.id.affixButton)
   Button affixButton;
+
+  // TODO: Create second button for options dialog
+//  @BindView(R.id.stitchButton)
+//  Button stitchButton;
 
   @BindView(R.id.settingsFrame)
   ViewGroup settingsFrame;
@@ -308,7 +315,6 @@ public class MainActivity extends AppCompatActivity
       settingsFrameAnimator =
           ValueAnimator.ofObject(
               new HeightEvaluator(settingsFrame), 0, originalSettingsFrameHeight);
-
     } else {
       button.setImageResource(R.drawable.ic_expand);
       settingsFrameAnimator =
@@ -333,8 +339,12 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.affixButton)
   public void onClickAffixButton(View v) {
-    selectedPhotos = adapter.getSelectedPhotos();
-    beginProcessing();
+      // TODO: open OptionsDialog and populate with options
+
+      showOptionsDialog();
+
+//    selectedPhotos = adapter.getSelectedPhotos();
+//    beginProcessing();
   }
 
   @OnClick({
@@ -988,4 +998,19 @@ public class MainActivity extends AppCompatActivity
           .start();
     }
   }
+
+    public void showOptionsDialog() {
+      DialogFragment dialogFragment = new OptionsDialog();
+      dialogFragment.show(getSupportFragmentManager(), "OPTIONS_DIALOG");
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialogFragment) {
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialogFragment) {
+
+    }
 }

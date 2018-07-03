@@ -12,7 +12,7 @@
     <string name="scale_priority_on">Scale smaller images to largest</string>
     <string name="scale_priority_off">Scale larger images to smallest</string>
     <string name="error">Error</string>
-    <string name="affixing_your_photos">Affixing your photos…</string>
+    <string name="affixing_your_photos">Stitching your photos…</string>
     <string name="retrieving_photo">Retrieving photo…</string>
     <string name="share">Share</string>
     <string name="open_with">Open With…</string>

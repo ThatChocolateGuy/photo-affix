@@ -3,7 +3,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccentPressed</item>
     </style>
 
     <style name="AppTheme.Black" parent="Theme.AppCompat.NoActionBar">
@@ -12,7 +12,7 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="android:statusBarColor">@android:color/black</item>
-        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:windowBackground">@color/peach</item>
     </style>
 
     <style name="AccentButton">
@@ -21,6 +21,17 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/button_height</item>
         <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="AppTheme2" parent="Theme.AppCompat.NoActionBar" >
+        <item name="colorPrimary">@color/brass</item>
+        <item name="colorPrimaryDark">@color/bistre</item>
+        <item name="colorAccent">@color/dark_brown_tangelo</item>
+
+        <item name="android:statusBarColor">@color/bistre</item>
+        <item name="android:windowBackground">@color/bistre</item>
+
+        <item name="android:textColor">@color/peach</item>
     </style>
 
 </resources>

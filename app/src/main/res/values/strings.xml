@@ -1,10 +1,10 @@
 <resources>
 
-    <string name="app_name">PhotoAffix BETA</string>
-    <string name="app_name_short">PhotoAffix</string>
+    <string name="app_name">PhotoStitch BETA</string>
+    <string name="app_name_short">PhotoStitch</string>
 
-    <string name="affix_zero">Affix (0)</string>
-    <string name="affix_x">Affix (%1$d)</string>
+    <string name="affix_zero">Stitch (0)</string>
+    <string name="affix_x">Stitch (%1$d)</string>
     <string name="clear">Clear</string>
     <string name="stack">Stack</string>
     <string name="stack_horizontally">Stack horizontally</string>
@@ -35,15 +35,24 @@
     <string name="about">About</string>
     <string name="dismiss">Dismiss</string>
     <string name="about_body"><![CDATA[
-        PhotoAffix, designed by <b>Aidan Follestad</b>.<br/>
+        <b>PhotoStitch</b> - created by <b>Nem Ekpunobi</b>.<br/>
+        <a href=\'http://triosdevelopers.com/~N.Ekpunobi\'>Website</a>&nbsp;&nbsp;
+        <a href=\'https://twitter.com/ThatChocoBro\'>Twitter</a>&nbsp;&nbsp;
+        <a href=\'https://about.me/nem-o\'>About.me</a>&nbsp;&nbsp;
+        <a href=\'https://github.com/ThatChocolateGuy\'>GitHub</a>&nbsp;&nbsp;
+        <a href=\'https://www.linkedin.com/in/grow-with-nem\'>LinkedIn</a><br/><br/>
+
+        Based on PhotoAffix, designed by <b>Aidan Follestad</b>.<br/>
         <a href=\'http://aidanfollestad.com\'>Website</a>&nbsp;&nbsp;
         <a href=\'https://twitter.com/afollestad\'>Twitter</a>&nbsp;&nbsp;
         <a href=\'https://google.com/+AidanFollestad\'>Google+</a>&nbsp;&nbsp;
         <a href=\'https://github.com/afollestad\'>GitHub</a>&nbsp;&nbsp;
         <a href=\'https://www.linkedin.com/in/afollestad\'>LinkedIn</a><br/><br/>
+
         Icon by <a href=\'https://plus.google.com/+EduardoPratti\'>Eduardo Pratti</a>.<br/>
         Play Store feature graphic by <a href=\'https://plus.google.com/+RikiDev\'>RB Designs</a>.<br/>
         Contributions from <a href=\'https://plus.google.com/+DanielCiao\'>Daniel Ciao</a>.<br/><br/>
+
         This project is <a href=\'https://github.com/afollestad/photo-affix\'>open source</a>.<br/>
         Join the <a href=\'https://plus.google.com/communities/114777506465785892824\'>Google+ community</a>, and
         <a href=\'https://play.google.com/apps/testing/com.afollestad.photoaffix\'>opt-in to beta testing</a>!
@@ -55,6 +64,8 @@
     <string name="background_fill_color_transparent">Background fill (transparent)</string>
     <string name="format">Format:</string>
     <string name="quality">Quality:</string>
+    <string name="stitch_photos">Stitch Photos</string>
+    <string name="expand_options">Expand Options</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

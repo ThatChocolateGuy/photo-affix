@@ -22,6 +22,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.Size;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity
     implements ColorChooserDialog.ColorCallback,
     ImageSpacingDialog.SpacingCallback,
     ImageSizingDialog.SizingCallback,
-        OptionsDialog.OptionsDialogCallback,
+    OptionsDialog.OptionsDialogCallback,
     DragSelectRecyclerViewAdapter.SelectionListener {
 
   private static final int PERMISSION_RC = 69;
@@ -85,12 +86,8 @@ public class MainActivity extends AppCompatActivity
   @BindView(R.id.appbar_toolbar)
   Toolbar toolbar;
 
-  @BindView(R.id.affixButton)
+  @BindView(R.id.affixButton)  // this
   Button affixButton;
-
-  // TODO: Create second button for options dialog
-//  @BindView(R.id.stitchButton)
-//  Button stitchButton;
 
   @BindView(R.id.settingsFrame)
   ViewGroup settingsFrame;
@@ -122,7 +119,7 @@ public class MainActivity extends AppCompatActivity
   @BindView(R.id.scalePrioritySwitch)
   CheckBox scalePrioritySwitch;
 
-  private PhotoGridAdapter adapter;
+  public static PhotoGridAdapter adapter;
   private Photo[] selectedPhotos;
   private int traverseIndex;
   private boolean autoSelectFirst;
@@ -327,7 +324,7 @@ public class MainActivity extends AppCompatActivity
     settingsFrameAnimator.start();
   }
 
-  private void beginProcessing() {
+  public void beginProcessing() {
     affixButton.setEnabled(false);
     try {
       startProcessing();
@@ -339,12 +336,12 @@ public class MainActivity extends AppCompatActivity
 
   @OnClick(R.id.affixButton)
   public void onClickAffixButton(View v) {
-      // TODO: open OptionsDialog and populate with options
+    // Lock orientation so the Activity won't change configuration on button tap
+    Util.lockOrientation(this);
 
-      showOptionsDialog();
+    // Open OptionsDialog and populate with stitching options
+    showOptionsDialog();
 
-//    selectedPhotos = adapter.getSelectedPhotos();
-//    beginProcessing();
   }
 
   @OnClick({
@@ -999,18 +996,15 @@ public class MainActivity extends AppCompatActivity
     }
   }
 
-    public void showOptionsDialog() {
-      DialogFragment dialogFragment = new OptionsDialog();
-      dialogFragment.show(getSupportFragmentManager(), "OPTIONS_DIALOG");
-    }
+  public void showOptionsDialog() {
+    DialogFragment dialogFragment = new OptionsDialog();
+    dialogFragment.show(getSupportFragmentManager(), "OPTIONS_DIALOG");
+  }
 
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialogFragment) {
-
-    }
-
-    @Override
-    public void onDialogNegativeClick(DialogFragment dialogFragment) {
-
-    }
+  @Override
+  public void onDialogPositiveClick(DialogFragment dialogFragment) {
+      selectedPhotos = adapter.getSelectedPhotos();
+      beginProcessing();
+      dialogFragment.dismiss();
+  }
 }

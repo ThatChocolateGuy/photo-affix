@@ -31,6 +31,7 @@
     <Button
       android:id="@+id/affixButton"
       style="@style/AccentButton"
+      android:title="@string/stitch_photos"
       android:layout_marginBottom="@dimen/grid_padding_large"
       android:layout_marginStart="@dimen/content_inset_less"
       android:layout_toStartOf="@+id/expandButton"
@@ -39,6 +40,7 @@
 
     <ImageView
       android:id="@+id/expandButton"
+      android:title="@string/expand_options"
       android:layout_width="@dimen/button_height"
       android:layout_height="@dimen/button_height"
       android:layout_alignBottom="@+id/affixButton"

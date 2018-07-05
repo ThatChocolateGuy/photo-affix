@@ -10,9 +10,10 @@
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
     android:supportsRtl="true"
-    android:theme="@style/AppTheme">
+    android:theme="@style/AppTheme2">
 
-    <activity android:name=".ui.LoginActivity">
+    <activity android:name=".ui.LoginActivity"
+        android:theme="@style/AppTheme2">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
@@ -20,7 +21,8 @@
       </intent-filter>
     </activity>
 
-    <activity android:name=".ui.MainActivity">
+    <activity android:name=".ui.MainActivity"
+        android:theme="@style/AppTheme2">
       <intent-filter>
         <action android:name="android.intent.action.SEND_MULTIPLE"/>
         <category android:name="android.intent.category.DEFAULT"/>
@@ -30,7 +32,7 @@
 
     <activity
       android:name=".ui.ViewerActivity"
-      android:theme="@style/AppTheme.Black"/>
+      android:theme="@style/AppTheme2"/>
 
     <provider
       android:name="android.support.v4.content.FileProvider"

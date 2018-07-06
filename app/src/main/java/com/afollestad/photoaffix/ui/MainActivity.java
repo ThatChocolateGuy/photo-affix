@@ -996,11 +996,13 @@ public class MainActivity extends AppCompatActivity
     }
   }
 
+  // Options (Confirmation) Dialog
   public void showOptionsDialog() {
     DialogFragment dialogFragment = new OptionsDialog();
     dialogFragment.show(getSupportFragmentManager(), "OPTIONS_DIALOG");
   }
 
+  // Options Dialog Callback Method
   @Override
   public void onDialogPositiveClick(DialogFragment dialogFragment) {
       selectedPhotos = adapter.getSelectedPhotos();
